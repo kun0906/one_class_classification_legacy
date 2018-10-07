@@ -15,13 +15,14 @@ from utils.pickle import dump_svm, load_svm
 
 class OCSVM(object):
 
-    def __init__(self, loss, train_set, val_set='', kernel='rbf', **kwargs):
+    def __init__(self, loss, train_set,val_set='', kernel='rbf', grid_search_cv_flg=False, **kwargs):
 
         # initialize
-        self.train_set = train_set
+        self.train_set = (train_set[0][:100,:],train_set[1][:100])
         self.val_set=val_set
         self.nu=0.5
         self.gamma=1
+        self.grid_search_cv_flg=grid_search_cv_flg
 
         # self.svm = None
         # self.cv_svm = None
@@ -72,20 +73,54 @@ class OCSVM(object):
         # # diagnostics
         self.best_weight_dict = None  # attribute to reuse nnet plot-functions
 
-    def train(self,train_set):
+    def train(self):
         print('Training begins...')
         start_time =time.time()
-        X_train_shape = train_set[0].shape
-        X_train = train_set[0].reshape(X_train_shape[0], np.prod(X_train_shape[1:]))
+        X_train_shape = self.train_set[0].shape
+        X_train = self.train_set[0].reshape(X_train_shape[0], np.prod(X_train_shape[1:]))
         print('\tTrain_set size is ', X_train.shape)
 
-        # if rbf-kernel, re-initialize svm with gamma minimizing the numerical error
-        gamma = 1 / (np.max(pairwise_distances(X_train)) ** 2)
-        print('gamma:',gamma)
-        # gamma = 0.7
-        self.ocsvm = svm.OneClassSVM(kernel=self.kernel, nu=self.nu, gamma=gamma)  # construction function
+        if self.grid_search_cv_flg:
+            # parameters={'kernel':('linear','rbf'),'nu':[0.01,0.99],'gamma':[0,1]}
+            # self.ocsvm=svm.OneClassSVM()
+            # clf = GridSearchCV(self.ocsvm,parameters,cv=5,scoring="accuracy")
+            # clf.fit(X_train)
+            cv_auc = 0.0
+            cv_acc = 0.0
+            for nu in np.logspace(-10, -0.001, num=5, base=2):
+                for gamma in np.logspace(-10, -0.001, num=5, base=2):  # log2
+                    # train on selected gamma
+                    print('nu:',nu,', gamma:',gamma)
+                    self.ocsvm = svm.OneClassSVM(kernel=self.kernel, nu=nu, gamma=gamma)
+                    self.ocsvm.fit(X_train)
+                    # predict on small hold-out set
+                    auc, acc, cm = self.evaluate(self.val_set, name='val_set')
+                    # save model if AUC on hold-out set improved
+                    # if self.diag['val_set']['auc'][0] > cv_auc:
+                    if self.diag['val_set']['acc'][0] > cv_acc:
+                        self.best_ocsvm = self.ocsvm   # save the best results
+                        self.nu = nu
+                        self.gamma = gamma
+                        cv_auc = self.diag['val_set']['auc'][0]
+                        cv_acc = self.diag['val_set']['acc'][0]
+                        self.auc= auc
+                        self.acc=acc
+                        self.cm = cm
+            # save results of best cv run
+            self.diag['val_set']['auc'] = cv_auc
+            self.diag['val_set']['acc'] = cv_acc
 
-        self.ocsvm.fit(X_train[:100,:])
+            print('---The best accuracy on \'val_set\' is %.2f%% when nu and gamma are %.5f and %.5f respectively'%(self.acc, self.nu,self.gamma))
+            print('---Confusion matrix:\n',self.cm)
+            self.ocsvm=self.best_ocsvm
+        else:
+            # if rbf-kernel, re-initialize svm with gamma minimizing the numerical error
+            gamma = 1 / (np.max(pairwise_distances(X_train)) ** 2)
+            print('gamma:',gamma)
+            # gamma = 0.7
+            self.ocsvm = svm.OneClassSVM(kernel=self.kernel, nu=self.nu, gamma=gamma)  # construction function
+
+            self.ocsvm.fit(X_train)
         print('Training finished, it takes %.2fs'%(time.time()-start_time))
 
     def evaluate(self, data_set, name ='test_set', **kwargs):
@@ -108,8 +143,10 @@ class OCSVM(object):
         scores = (-1.0) * self.ocsvm.decision_function(X)
         y_pred = (self.ocsvm.predict(X) == -1) * 1
 
-        print(name +' Confusion matrix:\n',confusion_matrix(y, y_pred))
-        print(name + ' Acc: %.2f%% '%(100* sum(y==y_pred)/len(y)))
+        cm = confusion_matrix(y, y_pred)
+        print(name +' Confusion matrix:\n',cm)
+        acc = 100.0* sum(y==y_pred)/len(y)
+        print(name + ' Acc: %.2f%% '%(acc))
 
         self.diag[name]['scores'][:, 0] = scores.flatten()
         self.diag[name]['acc'][0] = 100.0 * sum(y == y_pred) / len(y)
@@ -120,6 +157,7 @@ class OCSVM(object):
 
         print('Evaluation finished, it takes %.2fs'%(time.time()-start_time))
 
+        return auc, acc, cm
 
 
     def initialize_svm(self, loss, **kwargs):

@@ -31,10 +31,10 @@ def ocsvm_main(dataset='mnist', loss='OneClassSVM', kernel='rbf', out_path='./lo
 
     train_set, val_set, test_set = load_data(dataset)
     # initialize OC-SVM
-    ocsvm = OCSVM(loss=loss, train_set=train_set, val_set=val_set, kernel=kernel, GridSearch=True)
+    ocsvm = OCSVM(loss=loss, train_set=train_set, val_set=val_set, kernel=kernel, grid_search_cv_flg=True)
 
     # train OC-SVM model
-    ocsvm.train(train_set)
+    ocsvm.train()
 
     # predict scores
     ocsvm.evaluate(train_set, name='train_set')
