@@ -87,8 +87,8 @@ class OCSVM(object):
             # clf.fit(X_train)
             cv_auc = 0.0
             cv_acc = 0.0
-            for nu in np.logspace(-10, -0.001, num=5, base=2):
-                for gamma in np.logspace(-10, -0.001, num=5, base=2):  # log2
+            for nu in np.logspace(-10, -0.001, num=3, base=2):
+                for gamma in np.logspace(-10, -0.001, num=3, base=2):  # log2
                     # train on selected gamma
                     print('nu:',nu,', gamma:',gamma)
                     self.ocsvm = svm.OneClassSVM(kernel=self.kernel, nu=nu, gamma=gamma)
@@ -149,6 +149,7 @@ class OCSVM(object):
         print(name + ' Acc: %.2f%% '%(acc))
 
         self.diag[name]['scores'][:, 0] = scores.flatten()
+        print(100.0 * sum(y == y_pred) / len(y))
         self.diag[name]['acc'][0] = 100.0 * sum(y == y_pred) / len(y)
 
         if sum(y) > 0:
