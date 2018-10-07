@@ -2,7 +2,7 @@ import time
 import os
 import numpy as np
 from sklearn import svm
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, confusion_matrix
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.model_selection import GridSearchCV
 
@@ -20,72 +20,82 @@ class OCSVM(object):
         # initialize
         self.train_set = train_set
         self.val_set=val_set
-        self.nu=0.8
+        self.nu=0.5
         self.gamma=1
 
-        self.svm = None
-        self.cv_svm = None
-        self.loss = loss
+        # self.svm = None
+        # self.cv_svm = None
+        # self.loss = loss
         self.kernel = kernel
-        self.K_train = None
-        self.K_val = None
-        self.K_test = None
-        # self.nu = None
+        # self.K_train = None
+        # self.K_val = None
+        # self.K_test = None
+        # # self.nu = None
         # self.gamma = None
         # self.initialize_svm(loss, **kwargs)
 
         # # load dataset
         # load_dataset(self, dataset)
-
-        # train and test time
-        self.clock = 0
-        self.clocked = 0
-        self.train_time = 0
-        self.val_time = 0
-        self.test_time = 0
+        #
+        # # train and test time
+        # self.clock = 0
+        # self.clocked = 0
+        # self.train_time = 0
+        # self.val_time = 0
+        # self.test_time = 0
 
         # Scores and AUC
         self.diag = {}
 
-        self.diag['train'] = {}
-        self.diag['val'] = {}
-        self.diag['test'] = {}
+        self.diag['train_set'] = {}
+        self.diag['val_set'] = {}
+        self.diag['test_set'] = {}
 
-        # self.diag['train']['scores'] = np.zeros((len(self.data._y_train), 1))
-        # self.diag['val']['scores'] = np.zeros((len(self.data._y_val), 1))
-        # self.diag['test']['scores'] = np.zeros((len(self.data._y_test), 1))
+        self.diag['train_set']['scores'] = {}
+        self.diag['val_set']['scores'] = {}
+        # self.diag['test_set']['scores'] = np.zeros((len(self.data._y_test), 1))
+        self.diag['test_set']['scores']={}
 
-        self.diag['train']['auc'] = np.zeros(1)
-        self.diag['val']['auc'] = np.zeros(1)
-        self.diag['test']['auc'] = np.zeros(1)
+        self.diag['train_set']['auc'] = np.zeros(1)
+        self.diag['val_set']['auc'] = np.zeros(1)
+        self.diag['test_set']['auc'] = np.zeros(1)
 
-        self.diag['train']['acc'] = np.zeros(1)
-        self.diag['val']['acc'] = np.zeros(1)
-        self.diag['test']['acc'] = np.zeros(1)
+        self.diag['train_set']['acc'] = np.zeros(1)
+        self.diag['val_set']['acc'] = np.zeros(1)
+        self.diag['test_set']['acc'] = np.zeros(1)
 
-        self.rho = None
-
-        # AD results log
-        self.ad_log = AD_Log()
-
-        # diagnostics
+        # self.rho = None
+        #
+        # # AD results log
+        # self.ad_log = AD_Log()
+        #
+        # # diagnostics
         self.best_weight_dict = None  # attribute to reuse nnet plot-functions
 
-    def train(self):
+    def train(self,train_set):
         print('Training begins...')
-        X_train_shape = self.train_set[0].shape
-        X_train = self.train_set[0].reshape(X_train_shape[0], np.prod(X_train_shape[1:]))
+        start_time =time.time()
+        X_train_shape = train_set[0].shape
+        X_train = train_set[0].reshape(X_train_shape[0], np.prod(X_train_shape[1:]))
         print('\tTrain_set size is ', X_train.shape)
 
         # if rbf-kernel, re-initialize svm with gamma minimizing the numerical error
-        # gamma = 1 / (np.max(pairwise_distances(X_train)) ** 2)
-        gamma = 0.7
+        gamma = 1 / (np.max(pairwise_distances(X_train)) ** 2)
+        print('gamma:',gamma)
+        # gamma = 0.7
         self.ocsvm = svm.OneClassSVM(kernel=self.kernel, nu=self.nu, gamma=gamma)  # construction function
 
-        self.ocsvm.fit(X_train)
-        print('Training finished.')
+        self.ocsvm.fit(X_train[:100,:])
+        print('Training finished, it takes %.2fs'%(time.time()-start_time))
 
-    def predict(self, data_set, **kwargs):
+    def evaluate(self, data_set, name ='test_set', **kwargs):
+
+        start_time = time.time()
+        # name = self.get_variable_name(data_set)
+        # name = [k for k,v in locals().items() if v == data_set]
+        print('\t Evaluating data is \'%s\'.' % name)
+
+        self.diag[name]['scores'] =np.zeros((len(data_set[1]),1),dtype=float)
 
         X= data_set[0]
         y=data_set[1]
@@ -95,17 +105,22 @@ class OCSVM(object):
             X = X.reshape(X_shape[0], np.prod(X_shape[1:]))
 
         print("Evaluation begins...")
-        scores = (-1.0) * self.svm.decision_function(X)
-        y_pred = (self.svm.predict(X) == -1) * 1
+        scores = (-1.0) * self.ocsvm.decision_function(X)
+        y_pred = (self.ocsvm.predict(X) == -1) * 1
 
-        self.diag[data_set.__name__]['scores'][:, 0] = scores.flatten()
-        self.diag[data_set.__name__]['acc'][0] = 100.0 * sum(y == y_pred) / len(y)
+        print(name +' Confusion matrix:\n',confusion_matrix(y, y_pred))
+        print(name + ' Acc: %.2f%% '%(100* sum(y==y_pred)/len(y)))
+
+        self.diag[name]['scores'][:, 0] = scores.flatten()
+        self.diag[name]['acc'][0] = 100.0 * sum(y == y_pred) / len(y)
 
         if sum(y) > 0:
             auc = roc_auc_score(y, scores.flatten())
-            self.diag[data_set.__name__]['auc'][0] = auc
+            self.diag[name]['auc'][0] = auc
 
-        print('Evaluation finished.')
+        print('Evaluation finished, it takes %.2fs'%(time.time()-start_time))
+
+
 
     def initialize_svm(self, loss, **kwargs):
 
@@ -240,7 +255,7 @@ class OCSVM(object):
         self.stop_clock()
         self.train_time = self.clocked
 
-    def predict(self, which_set='train', **kwargs):
+    def predict_backup(self, which_set='train', **kwargs):
 
         assert which_set in ('train', 'val', 'test')
 

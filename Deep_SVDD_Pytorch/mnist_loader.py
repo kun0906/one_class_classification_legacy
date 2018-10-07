@@ -43,4 +43,8 @@ def load():
     return mnist["training_images"], mnist["training_labels"], mnist["test_images"], mnist["test_labels"]
 
 if __name__ == '__main__':
-    init()
+    # init()
+    with gzip.open('/home/kun/PycharmProjects/Deep_SVDD_20181006/Deep-SVDD-master/data/train-images-idx3-ubyte.gz',
+                   'rb') as f:
+        train_set = np.frombuffer(f.read(), np.uint8, offset=16).reshape(-1, 28 * 28)
+    print('')

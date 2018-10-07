@@ -12,7 +12,7 @@ import numpy as np
 
 class MNIST_DataLoader(DataLoader):
 
-    def __init__(self):
+    def __init__(self,ad_experiment=1):
 
         DataLoader.__init__(self)
 
@@ -23,7 +23,7 @@ class MNIST_DataLoader(DataLoader):
         self.n_test = 10000
 
         self.seed = Cfg.seed
-
+        Cfg.ad_experiment =ad_experiment
         if Cfg.ad_experiment:
             self.n_classes = 2
         else:
