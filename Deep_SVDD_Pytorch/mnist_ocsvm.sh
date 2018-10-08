@@ -15,6 +15,6 @@ python baseline_ocsvm.py --xp_dir $xp_dir --dataset mnist --loss OneClassSVM --s
     --mnist_outlier $mnist_outlier;
 
 
-python baseline_ocsvm.py --xp_dir ../log/mnist_0vsall --dataset mnist --loss OneClassSVM --seed 0 --kernel rbf --nu 0.8
+python baseline_ocsvm.py --xp_dir ./log/mnist_0vsall --dataset mnist --loss OneClassSVM --seed 0 --kernel rbf --nu 0.8
     --GridSearchCV 1 --out_frac 0 --unit_norm_used l1 --pca 1 --mnist_val_frac 0 --mnist_normal 0
     --mnist_outlier -1
