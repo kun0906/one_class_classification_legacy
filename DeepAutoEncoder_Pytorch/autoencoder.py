@@ -9,7 +9,6 @@ from Utilities.utilies import load_data
 
 __author__ = 'Learn-Live'
 
-
 import time
 import numpy as np
 import matplotlib.pyplot as plt
@@ -161,8 +160,8 @@ def main(input_file, epochs=2):
     print('It starts at ', start_time)
 
     ### 1. load data and do preprocessing
-    train_set, val_set, test_set = load_data(input_file,norm_flg=True)
-    X= np.asarray([x_t for (x_t, y_t) in zip(*train_set) if y_t == 0],dtype=float)
+    train_set, val_set, test_set = load_data(input_file, norm_flg=True)
+    X = np.asarray([x_t for (x_t, y_t) in zip(*train_set) if y_t == 0], dtype=float)
     # X = []
     # for (x_t, y_t) in zip(*train_set):
     #     if y_t == 0:
@@ -170,7 +169,7 @@ def main(input_file, epochs=2):
     #         # y.append(y_t)
     #
     # X= np.asarray(X,dtype=float)
-    print('X.shape: ',X.shape)
+    print('X.shape: ', X.shape)
 
     ### 2. model initialization
     AE_model = AutoEncoder(X=X, y='', epochs=epochs)
