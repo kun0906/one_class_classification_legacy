@@ -82,7 +82,7 @@ class AutoEncoder(nn.Module):
         x = self.decoder(x1)
         return x
 
-    def train(self):
+    def train(self,val_set):
         dataloader = DataLoader(self.dataset, batch_size=self.batch_size, shuffle=True)
 
         self.loss = []
@@ -97,6 +97,8 @@ class AutoEncoder(nn.Module):
                 self.optimizer.step()
                 self.loss.append(loss.data)
 
+            self.T = self.loss[-1]
+            self.evaluate(val_set)
             # ===================log========================
             print('epoch [{:d}/{:d}], loss:{:.4f}'
                   .format(epoch + 1, self.epochs, loss.data))
@@ -107,7 +109,6 @@ class AutoEncoder(nn.Module):
         self.T = self.loss[-1]
         if self.show_flg:
             plt.figure()
-
             plt.plot(self.loss, 'r', alpha=0.5, label='loss')
             # plt.plot(G_loss, 'g', alpha=0.5, label='G_loss')
             plt.legend(loc='upper right')
@@ -160,14 +161,14 @@ def main(input_file, epochs=2):
     print('It starts at ', start_time)
 
     ### 1. load data and do preprocessing
-    train_set, val_set, test_set = load_data(input_file, norm_flg=True)
+    train_set, val_set, test_set = load_data(input_file, norm_flg=False)
     X = np.asarray([x_t for (x_t, y_t) in zip(*train_set) if y_t == 0], dtype=float)
     print('X.shape: ', X.shape)
 
     ### 2. model initialization
     AE_model = AutoEncoder(X=X, y='', epochs=epochs)
     ### a. train model
-    AE_model.train()
+    AE_model.train(val_set)
 
     ### b. dump model
     model_path = './log/autoencoder.pth'
