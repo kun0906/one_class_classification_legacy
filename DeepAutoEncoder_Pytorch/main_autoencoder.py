@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
    @ autoencoder:
-           abnormal detection
+           abnormal detection by reconstruction errors
 
 """
 from sklearn.metrics import confusion_matrix
@@ -19,6 +19,12 @@ from torch.utils.data import DataLoader
 
 
 def print_net(net, describe_str='Net'):
+    """
+
+    :param net:
+    :param describe_str:
+    :return:
+    """
     num_params = 0
     for param in net.parameters():
         num_params += param.numel()
@@ -81,18 +87,28 @@ class AutoEncoder(nn.Module):
             self.parameters(), lr=self.learning_rate, weight_decay=1e-5)
 
     def forward(self, x):
+        """
+
+        :param x:
+        :return:
+        """
         x1 = self.encoder(x)
         x = self.decoder(x1)
         return x
 
-    def train(self,val_set):
+    def train(self, val_set):
+        """
+
+        :param val_set:
+        :return:
+        """
         dataloader = DataLoader(self.train_set, batch_size=self.batch_size, shuffle=True)
 
-        self.results={}
-        self.results['train_set']={}
-        self.results['train_set']['acc']=[]
-        self.results['val_set']={}
-        self.results['val_set']['acc']=[]
+        self.results = {}
+        self.results['train_set'] = {}
+        self.results['train_set']['acc'] = []
+        self.results['val_set'] = {}
+        self.results['val_set']['acc'] = []
         self.loss = []
         for epoch in range(self.epochs):
             for iter, (batch_X, _) in enumerate(dataloader):
@@ -108,7 +124,7 @@ class AutoEncoder(nn.Module):
             self.T = self.loss[-1]
             train_set_acc, train_set_cm = self.evaluate(self.train_set_with_labels)
             self.results['train_set']['acc'].append(train_set_acc)
-            val_set_acc, val_set_cm=self.evaluate(val_set)
+            val_set_acc, val_set_cm = self.evaluate(val_set)
             self.results['val_set']['acc'].append(val_set_acc)
             # ===================log========================
             print('epoch [{:d}/{:d}], loss:{:.4f}'
@@ -151,20 +167,15 @@ class AutoEncoder(nn.Module):
         num_abnormal = 0
         print('Threshold(T) is ', self.T.data.tolist())
         for i in range(X.shape[0]):
+            # if torch.dist(AE_outs, X, 2) > self.T:
             # if torch.norm((AE_outs[i] - X[i]), 2) > self.T:
-            if self.criterion(AE_outs[i],X[i]) > self.T:
+            if self.criterion(AE_outs[i], X[i]) > self.T:
                 # print('abnormal sample.')
                 y_preds.append('1')  # 0 is normal, 1 is abnormal
                 num_abnormal += 1
             else:
                 y_preds.append('0')
-        print('abnormal sample is ', num_abnormal)
-        # if torch.dist(AE_outs, X, 2) > self.T:
-        #     print('abnormal sample.')
-        #     y_preds.append('1')  # 0 is normal, 1 is abnormal
-        #     num_abnormal += 1
-        # else:
-        #     y_preds.append('0')
+        print('No. of abnormal sample is ', num_abnormal)
         y_preds = np.asarray(y_preds, dtype=int)
         cm = confusion_matrix(y_pred=y_preds, y_true=y_true)
         print('Confusion matrix:\n', cm)
@@ -185,29 +196,29 @@ def main(input_file, epochs=2):
     st = time.time()
     print('It starts at ', start_time)
 
-    ### 1. load data and do preprocessing
+    ### 1 load data and do preprocessing
     train_set, val_set, test_set = load_data(input_file, norm_flg=True)
 
-    ### 2. model initialization
+    ### 2.1 model initialization
     AE_model = AutoEncoder(train_set, epochs=epochs)
-    ### a. train model
+    ### 2.2 train model
     AE_model.train(val_set)
 
-    ### b. dump model
+    ### 3.1 dump model
     model_path = './log/autoencoder.pth'
     torch.save(AE_model, model_path)
 
-    ### c. load model
+    ### 3.2 load model
     AE_model = torch.load(model_path)
 
-    ### d. evaluate model
-    train_set_acc, train_set_cm =AE_model.evaluate(train_set)
-    print('train_set: cm: \n',train_set_cm)
-    print('train_set: acc=%.2f%%'%train_set_acc)
+    ### 4 evaluate model
+    train_set_acc, train_set_cm = AE_model.evaluate(train_set)
+    print('train_set: cm: \n', train_set_cm)
+    print('train_set: acc=%.2f%%' % train_set_acc)
 
-    test_set_acc, test_set_cm=AE_model.evaluate(test_set)
+    test_set_acc, test_set_cm = AE_model.evaluate(test_set)
     print('test_set: cm: \n', test_set_cm)
-    print('test_set: acc=%.2f%%'%test_set_acc)
+    print('test_set: acc=%.2f%%' % test_set_acc)
 
     ###
     end_time = time.strftime('%Y-%h-%d %H:%M:%S', time.localtime())

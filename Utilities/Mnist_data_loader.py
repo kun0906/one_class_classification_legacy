@@ -12,7 +12,7 @@ import numpy as np
 
 class MNIST_DataLoader(DataLoader):
 
-    def __init__(self,ad_experiment=1):
+    def __init__(self, ad_experiment=1):
 
         DataLoader.__init__(self)
 
@@ -23,7 +23,7 @@ class MNIST_DataLoader(DataLoader):
         self.n_test = 10000
 
         self.seed = Cfg.seed
-        Cfg.ad_experiment =ad_experiment
+        Cfg.ad_experiment = ad_experiment
         if Cfg.ad_experiment:
             self.n_classes = 2
         else:
@@ -166,7 +166,7 @@ class MNIST_DataLoader(DataLoader):
     def build_architecture(self, nnet):
 
         # implementation of different network architectures
-        assert Cfg.mnist_architecture in (1,2)
+        assert Cfg.mnist_architecture in (1, 2)
 
         # increase number of parameters if dropout is used
         if Cfg.dropout_architecture:
@@ -190,19 +190,19 @@ class MNIST_DataLoader(DataLoader):
 
             addConvModule(nnet,
                           num_filters=8 * units_multiplier,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           W_init=W1_init,
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           dropout=Cfg.dropout,
                           p_dropout=0.2)
 
             addConvModule(nnet,
                           num_filters=4 * units_multiplier,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           dropout=Cfg.dropout)
 
@@ -231,27 +231,27 @@ class MNIST_DataLoader(DataLoader):
 
             addConvModule(nnet,
                           num_filters=256 * units_multiplier,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           W_init=W1_init,
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           dropout=Cfg.dropout,
                           p_dropout=0.2)
 
             addConvModule(nnet,
                           num_filters=256 * units_multiplier,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           dropout=Cfg.dropout)
 
             addConvModule(nnet,
                           num_filters=128 * units_multiplier,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           dropout=Cfg.dropout)
 
@@ -304,17 +304,17 @@ class MNIST_DataLoader(DataLoader):
 
             addConvModule(nnet,
                           num_filters=8,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           W_init=W1_init,
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm)
 
             addConvModule(nnet,
                           num_filters=4,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm)
 
             # Code Layer
@@ -328,23 +328,24 @@ class MNIST_DataLoader(DataLoader):
                 nnet.addLeakyReLU()
             else:
                 nnet.addReLU()
-            nnet.addUpscale(scale_factor=(2,2))  # TODO: is this Upscale necessary? Shouldn't there be as many Upscales as MaxPools?
+            nnet.addUpscale(scale_factor=(
+            2, 2))  # TODO: is this Upscale necessary? Shouldn't there be as many Upscales as MaxPools?
 
             addConvModule(nnet,
                           num_filters=4,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           upscale=True)
 
             # to have the same output dimensions, pad must be 1 here
             addConvModule(nnet,
                           num_filters=8,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           pad=1,
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           upscale=True)
 
@@ -376,24 +377,24 @@ class MNIST_DataLoader(DataLoader):
 
             addConvModule(nnet,
                           num_filters=256,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           W_init=W1_init,
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm)
 
             addConvModule(nnet,
                           num_filters=256,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm)
 
             addConvModule(nnet,
                           num_filters=128,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm)
 
             if Cfg.mnist_bias:
@@ -420,38 +421,38 @@ class MNIST_DataLoader(DataLoader):
 
             addConvModule(nnet,
                           num_filters=128,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           upscale=True)
 
             addConvModule(nnet,
                           num_filters=256,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           upscale=True)
 
             # to have the same output dimensions, pad must be 1 here
             addConvModule(nnet,
                           num_filters=256,
-                          filter_size=(5,5),
+                          filter_size=(5, 5),
                           pad=1,
                           bias=Cfg.mnist_bias,
-                          pool_size=(2,2),
+                          pool_size=(2, 2),
                           use_batch_norm=Cfg.use_batch_norm,
                           upscale=True)
 
             # reconstruction
             if Cfg.mnist_bias:
                 nnet.addConvLayer(num_filters=1,
-                                  filter_size=(5,5),
+                                  filter_size=(5, 5),
                                   pad='same')
             else:
                 nnet.addConvLayer(num_filters=1,
-                                  filter_size=(5,5),
+                                  filter_size=(5, 5),
                                   pad='same',
                                   b=None)
             nnet.addSigmoidLayer()
@@ -461,7 +462,6 @@ class MNIST_DataLoader(DataLoader):
 
 
 def load_mnist_images(filename):
-
     with gzip.open(filename, 'rb') as f:
         data = np.frombuffer(f.read(), np.uint8, offset=16)
 
@@ -472,7 +472,6 @@ def load_mnist_images(filename):
 
 
 def load_mnist_labels(filename):
-
     with gzip.open(filename, 'rb') as f:
         data = np.frombuffer(f.read(), np.uint8, offset=8)
 
