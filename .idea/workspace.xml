@@ -15,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/OneClassClassification_20181006$autoencoder.coverage" NAME="autoencoder Coverage Results" MODIFIED="1538964140816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DeepAutoEncoder_Pytorch" />
+    <SUITE FILE_PATH="coverage/OneClassClassification_20181006$autoencoder.coverage" NAME="autoencoder Coverage Results" MODIFIED="1539102231004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DeepAutoEncoder_Pytorch" />
     <SUITE FILE_PATH="coverage/Deep_SVDD_20181006$Deep_SVDD_main.coverage" NAME="Deep_SVDD_main Coverage Results" MODIFIED="1538927247053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Deep_SVDD_Pytorch" />
     <SUITE FILE_PATH="coverage/Deep_SVDD_20181006$svm.coverage" NAME="svm Coverage Results" MODIFIED="1538924648968" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Deep_SVDD_Pytorch" />
     <SUITE FILE_PATH="coverage/Deep_SVDD_20181006$mnist_loader.coverage" NAME="mnist_loader Coverage Results" MODIFIED="1538929281627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Deep-SVDD-master" />
@@ -40,13 +40,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main_autoencoder.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main_autoencoder.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DeepAutoEncoder_Pytorch/main_autoencoder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="114" column="22" lean-forward="true" selection-start-line="114" selection-start-column="22" selection-end-line="114" selection-end-column="22" />
+            <state relative-caret-position="165">
+              <caret line="188" column="44" selection-start-line="188" selection-start-column="35" selection-end-line="188" selection-end-column="44" />
               <folding>
                 <element signature="e#81#125#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mnist_loader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Deep_SVDD_Pytorch/mnist_loader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Mnist_data_loader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utilities/Mnist_data_loader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-6213">
+              <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -55,31 +76,19 @@
       <file leaf-file-name="loss.py" pinned="false" current-in-tab="false">
         <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/modules/loss.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6135">
-              <caret line="416" column="83" selection-start-line="416" selection-start-column="55" selection-end-line="416" selection-end-column="83" />
+            <state relative-caret-position="171">
+              <caret line="420" column="25" selection-start-line="420" selection-start-column="17" selection-end-line="420" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utilies.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="utilies.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Utilities/utilies.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="41" column="53" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="53" />
+            <state relative-caret-position="400">
+              <caret line="49" column="60" lean-forward="true" selection-start-line="46" selection-start-column="3" selection-end-line="49" selection-end-column="60" />
               <folding>
                 <element signature="e#25#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="baisc_svm.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Deep_SVDD_Pytorch/baisc_svm.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2100">
-              <caret line="152" column="36" selection-start-line="152" selection-start-column="36" selection-end-line="152" selection-end-column="69" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,6 +99,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
               <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Wednesday-workingHours-withoutInfinity-Sampled.pcap_ISCX.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/Wednesday-workingHours-withoutInfinity-Sampled.pcap_ISCX.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="113" lean-forward="true" selection-start-line="4" selection-start-column="113" selection-end-line="4" selection-end-column="113" />
             </state>
           </provider>
         </entry>
@@ -147,10 +165,10 @@
         <option value="$PROJECT_DIR$/Deep_SVDD_Pytorch/main_baseline_ocsvm.py" />
         <option value="$PROJECT_DIR$/Deep_SVDD_Pytorch/mnist_ocsvm.sh" />
         <option value="$PROJECT_DIR$/Utilities/Mnist_data_loader.py" />
-        <option value="$PROJECT_DIR$/Utilities/utilies.py" />
         <option value="$PROJECT_DIR$/DeepAutoEncoder_Pytorch/autoencoder.py" />
-        <option value="$PROJECT_DIR$/Utilities/CSV_Dataloaer.py" />
+        <option value="$PROJECT_DIR$/Utilities/utilies.py" />
         <option value="$PROJECT_DIR$/DeepAutoEncoder_Pytorch/main_autoencoder.py" />
+        <option value="$PROJECT_DIR$/Utilities/CSV_Dataloaer.py" />
       </list>
     </option>
   </component>
@@ -164,10 +182,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="50" />
-    <option name="y" value="24" />
+    <option name="x" value="78" />
+    <option name="y" value="46" />
     <option name="width" value="1756" />
-    <option name="height" value="985" />
+    <option name="height" value="1013" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -186,7 +204,22 @@
             <path>
               <item name="OneClassClassification_20181006" type="b2602c69:ProjectViewProjectNode" />
               <item name="OneClassClassification_20181006" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="OneClassClassification_20181006" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OneClassClassification_20181006" type="462c0819:PsiDirectoryNode" />
+              <item name="Deep_SVDD_Pytorch" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="OneClassClassification_20181006" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OneClassClassification_20181006" type="462c0819:PsiDirectoryNode" />
               <item name="DeepAutoEncoder_Pytorch" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="OneClassClassification_20181006" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OneClassClassification_20181006" type="462c0819:PsiDirectoryNode" />
+              <item name="Utilities" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -453,27 +486,33 @@
       <option name="project" value="LOCAL" />
       <updated>1538963831115</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add val_set evaluate in training phase">
+      <created>1538964247622</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1538964247622</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1920" height="1021" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="12" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.5010672" side_tool="true" weight="0.35842696" />
-      <window_info anchor="right" x="0" y="0" width="297" height="785" id="Documentation" order="5" sideWeight="0.510274" side_tool="true" visible="true" weight="0.23745997" />
+      <window_info anchor="right" x="0" y="0" width="297" height="785" id="Documentation" order="5" sideWeight="0.5111492" side_tool="true" visible="true" weight="0.13180363" />
       <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49893278" visible="true" weight="0.3438202" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49893278" visible="true" weight="0.34494382" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.35362998" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.3494382" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17129135" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17129135" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" sideWeight="0.49143836" weight="0.10512273" />
-      <window_info anchor="right" id="SciView" order="4" sideWeight="0.48972604" visible="true" weight="0.23745997" />
+      <window_info anchor="right" id="Database" order="3" sideWeight="0.48885077" visible="true" weight="0.13180363" />
+      <window_info anchor="right" id="SciView" order="4" sideWeight="0.6926503" weight="0.28121665" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.4994664" weight="0.48651686" />
+      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.4994664" weight="0.37078652" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -495,7 +534,8 @@
     <MESSAGE value="add grid_search_cv for one class svm" />
     <MESSAGE value="add csv file process" />
     <MESSAGE value="add autoencoder.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="add autoencoder.py" />
+    <MESSAGE value="add val_set evaluate in training phase" />
+    <option name="LAST_COMMIT_MESSAGE" value="add val_set evaluate in training phase" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -607,11 +647,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DeepAutoEncoder_Pytorch/main_autoencoder.py</url>
-          <line>144</line>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/DeepAutoEncoder_Pytorch/main_autoencoder.py</url>
           <line>131</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
@@ -635,12 +670,22 @@
           <line>24</line>
           <option name="timeStamp" value="62" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DeepAutoEncoder_Pytorch/main_autoencoder.py</url>
+          <line>144</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="63" />
+      <option name="time" value="64" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>(AE_outs[i] - X[i])</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>np.asarray(X,dtype=float)</expression-string>
         <language-id>Python</language-id>
@@ -678,11 +723,6 @@
       </expression>
       <expression>
         <expression-string>[(k,v) for k,v in zip(train_set[0],train_set[1]) if v == 1]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>range_val.all()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -767,13 +807,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simple_svdd-demo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.5/dist-packages/sklearn/metrics/ranking.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -816,13 +849,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Deep_SVDD_Pytorch/mnist_loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
         </state>
       </provider>
     </entry>
@@ -985,24 +1011,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/Mnist_data_loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/serialization.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2918">
           <caret line="290" column="4" selection-start-line="290" selection-start-column="4" selection-end-line="290" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/functional.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="1021" selection-start-line="1021" selection-end-line="1021" />
         </state>
       </provider>
     </entry>
@@ -1013,9 +1025,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/Wednesday-workingHours-withInfinity.pcap_ISCX.csv" />
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/functional.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="1704" column="4" selection-start-line="1704" selection-start-column="4" selection-end-line="1704" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simple_svdd-demo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2788">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/Wednesday-workingHours-withoutInfinity-Sampled.pcap_ISCX.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="113" lean-forward="true" selection-start-line="4" selection-start-column="113" selection-end-line="4" selection-end-column="113" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Deep_SVDD_Pytorch/baisc_svm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2100">
+        <state relative-caret-position="367">
           <caret line="152" column="36" selection-start-line="152" selection-start-column="36" selection-end-line="152" selection-end-column="69" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -1023,26 +1057,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/Wednesday-workingHours-withInfinity.pcap_ISCX.csv" />
-    <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/modules/loss.py">
+    <entry file="file://$PROJECT_DIR$/Deep_SVDD_Pytorch/mnist_loader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6135">
-          <caret line="416" column="83" selection-start-line="416" selection-start-column="55" selection-end-line="416" selection-end-column="83" />
+        <state relative-caret-position="132">
+          <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/Wednesday-workingHours-withoutInfinity-Sampled.pcap_ISCX.csv">
+    <entry file="file://$PROJECT_DIR$/Utilities/Mnist_data_loader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408559" />
+        <state relative-caret-position="-6213">
+          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/utilies.py">
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/modules/loss.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="41" column="53" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="53" />
-          <folding>
-            <element signature="e#25#38#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="171">
+          <caret line="420" column="25" selection-start-line="420" selection-start-column="17" selection-end-line="420" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -1055,10 +1090,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DeepAutoEncoder_Pytorch/main_autoencoder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="114" column="22" lean-forward="true" selection-start-line="114" selection-start-column="22" selection-end-line="114" selection-end-column="22" />
+        <state relative-caret-position="165">
+          <caret line="188" column="44" selection-start-line="188" selection-start-column="35" selection-end-line="188" selection-end-column="44" />
           <folding>
             <element signature="e#81#125#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/utilies.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="49" column="60" lean-forward="true" selection-start-line="46" selection-start-column="3" selection-end-line="49" selection-end-column="60" />
+          <folding>
+            <element signature="e#25#38#0" expanded="true" />
           </folding>
         </state>
       </provider>

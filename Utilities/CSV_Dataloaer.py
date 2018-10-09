@@ -13,7 +13,7 @@ def csv_dataloader(input_file):
             if line.startswith('Flow'):
                 line =f_in.readline()
             line_arr= line.split(',')
-            X.append(line_arr[7:12])
+            X.append(line_arr[7:40])
             if line_arr[-1] =='2\n':
                 y.append('1')
             else:

@@ -28,7 +28,7 @@ def print_net(net, describe_str='Net'):
 
 
 class AutoEncoder(nn.Module):
-    def __init__(self, X, y, epochs=2):
+    def __init__(self, train_set, epochs=2):
         """
 
         :param X: Features
@@ -36,12 +36,15 @@ class AutoEncoder(nn.Module):
         :param epochs:
         """
         super().__init__()
+        self.train_set_with_labels = train_set  # used for evaluation
+        X = np.asarray([x_t for (x_t, y_t) in zip(*train_set) if y_t == 0], dtype=float)
+        print('X.shape: ', X.shape)
         # self.dataset = Data.TensorDataset(torch.Tensor(X), torch.Tensor(y))
-        self.dataset = Data.TensorDataset(torch.Tensor(X), torch.Tensor(X))
+        self.train_set = Data.TensorDataset(torch.Tensor(X), torch.Tensor(X))  # used for train autoencoder
 
         self.epochs = epochs
         self.learning_rate = 1e-3
-        self.batch_size = 50
+        self.batch_size = 64
 
         self.show_flg = True
 
@@ -83,8 +86,13 @@ class AutoEncoder(nn.Module):
         return x
 
     def train(self,val_set):
-        dataloader = DataLoader(self.dataset, batch_size=self.batch_size, shuffle=True)
+        dataloader = DataLoader(self.train_set, batch_size=self.batch_size, shuffle=True)
 
+        self.results={}
+        self.results['train_set']={}
+        self.results['train_set']['acc']=[]
+        self.results['val_set']={}
+        self.results['val_set']['acc']=[]
         self.loss = []
         for epoch in range(self.epochs):
             for iter, (batch_X, _) in enumerate(dataloader):
@@ -98,7 +106,10 @@ class AutoEncoder(nn.Module):
                 self.loss.append(loss.data)
 
             self.T = self.loss[-1]
-            self.evaluate(val_set)
+            train_set_acc, train_set_cm = self.evaluate(self.train_set_with_labels)
+            self.results['train_set']['acc'].append(train_set_acc)
+            val_set_acc, val_set_cm=self.evaluate(val_set)
+            self.results['val_set']['acc'].append(val_set_acc)
             # ===================log========================
             print('epoch [{:d}/{:d}], loss:{:.4f}'
                   .format(epoch + 1, self.epochs, loss.data))
@@ -112,6 +123,16 @@ class AutoEncoder(nn.Module):
             plt.plot(self.loss, 'r', alpha=0.5, label='loss')
             # plt.plot(G_loss, 'g', alpha=0.5, label='G_loss')
             plt.legend(loc='upper right')
+            plt.xlabel('epochs')
+            plt.ylabel('loss')
+            plt.show()
+
+            plt.figure()
+            plt.plot(self.results['train_set']['acc'], 'r', alpha=0.5, label='train_set_acc')
+            plt.plot(self.results['val_set']['acc'], 'g', alpha=0.5, label='val_set_acc')
+            plt.legend(loc='upper right')
+            plt.xlabel('epochs')
+            plt.ylabel('acc')
             plt.show()
 
     def evaluate(self, test_set):
@@ -130,12 +151,14 @@ class AutoEncoder(nn.Module):
         num_abnormal = 0
         print('Threshold(T) is ', self.T.data.tolist())
         for i in range(X.shape[0]):
-            if torch.norm((AE_outs[i] - X[i]), 2) > self.T:
+            # if torch.norm((AE_outs[i] - X[i]), 2) > self.T:
+            if self.criterion(AE_outs[i],X[i]) > self.T:
                 # print('abnormal sample.')
                 y_preds.append('1')  # 0 is normal, 1 is abnormal
                 num_abnormal += 1
             else:
                 y_preds.append('0')
+        print('abnormal sample is ', num_abnormal)
         # if torch.dist(AE_outs, X, 2) > self.T:
         #     print('abnormal sample.')
         #     y_preds.append('1')  # 0 is normal, 1 is abnormal
@@ -147,6 +170,8 @@ class AutoEncoder(nn.Module):
         print('Confusion matrix:\n', cm)
         acc = 100.0 * sum(y_true == y_preds) / len(y_true)
         print('Acc: %.2f%%' % acc)
+
+        return acc, cm
 
 
 def main(input_file, epochs=2):
@@ -161,12 +186,10 @@ def main(input_file, epochs=2):
     print('It starts at ', start_time)
 
     ### 1. load data and do preprocessing
-    train_set, val_set, test_set = load_data(input_file, norm_flg=False)
-    X = np.asarray([x_t for (x_t, y_t) in zip(*train_set) if y_t == 0], dtype=float)
-    print('X.shape: ', X.shape)
+    train_set, val_set, test_set = load_data(input_file, norm_flg=True)
 
     ### 2. model initialization
-    AE_model = AutoEncoder(X=X, y='', epochs=epochs)
+    AE_model = AutoEncoder(train_set, epochs=epochs)
     ### a. train model
     AE_model.train(val_set)
 
@@ -178,8 +201,13 @@ def main(input_file, epochs=2):
     AE_model = torch.load(model_path)
 
     ### d. evaluate model
-    AE_model.evaluate(train_set)
-    AE_model.evaluate(test_set)
+    train_set_acc, train_set_cm =AE_model.evaluate(train_set)
+    print('train_set: cm: \n',train_set_cm)
+    print('train_set: acc=%.2f%%'%train_set_acc)
+
+    test_set_acc, test_set_cm=AE_model.evaluate(test_set)
+    print('test_set: cm: \n', test_set_cm)
+    print('test_set: acc=%.2f%%'%test_set_acc)
 
     ###
     end_time = time.strftime('%Y-%h-%d %H:%M:%S', time.localtime())
@@ -189,5 +217,5 @@ def main(input_file, epochs=2):
 
 if __name__ == '__main__':
     input_file = '../data/Wednesday-workingHours-withoutInfinity-Sampled.pcap_ISCX.csv'
-    epochs = 10
+    epochs = 1000
     main(input_file, epochs)
