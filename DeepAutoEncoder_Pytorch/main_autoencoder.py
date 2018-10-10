@@ -119,8 +119,8 @@ class AutoEncoder(nn.Module):
                 self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
-                self.loss.append(loss.data)
 
+            self.loss.append(loss.data)
             self.T = self.loss[-1]
             train_set_acc, train_set_cm = self.evaluate(self.train_set_with_labels)
             self.results['train_set']['acc'].append(train_set_acc)
@@ -196,22 +196,23 @@ def main(input_file, epochs=2):
     st = time.time()
     print('It starts at ', start_time)
 
-    ### 1 load data and do preprocessing
-    train_set, val_set, test_set = load_data(input_file, norm_flg=True)
+    # step 1 load data and do preprocessing
+    train_set, val_set, test_set = load_data(input_file, norm_flg=0)
 
-    ### 2.1 model initialization
+    # step 2.1 model initialization
     AE_model = AutoEncoder(train_set, epochs=epochs)
-    ### 2.2 train model
+
+    # step 2.2 train model
     AE_model.train(val_set)
 
-    ### 3.1 dump model
+    # step 3.1 dump model
     model_path = './log/autoencoder.pth'
     torch.save(AE_model, model_path)
 
-    ### 3.2 load model
+    # step 3.2 load model
     AE_model = torch.load(model_path)
 
-    ### 4 evaluate model
+    # step 4 evaluate model
     train_set_acc, train_set_cm = AE_model.evaluate(train_set)
     print('train_set: cm: \n', train_set_cm)
     print('train_set: acc=%.2f%%' % train_set_acc)
