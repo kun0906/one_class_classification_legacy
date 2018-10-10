@@ -2,9 +2,9 @@
 """
     useful tools
 """
+
 import pickle
 import numpy as np
-# from sklearn.cross_validation import train_test_split
 from sklearn.model_selection import train_test_split
 from Utilities.CSV_Dataloaer import csv_dataloader
 
@@ -70,7 +70,7 @@ def load_data(input_data='', norm_flg=True):
 
 def dump_model(model, out_file):
     """
-
+        save model to disk
     :param model:
     :param out_file:
     :return:
@@ -82,12 +82,16 @@ def dump_model(model, out_file):
 
 
 def load_model(input_file):
-    print("Loading model...")
+    """
 
+    :param input_file:
+    :return:
+    """
+    print("Loading model...")
     with open(input_file, 'rb') as f:
         model = pickle.load(f)
-
     print("Model loaded.")
+
     return model
 
 
