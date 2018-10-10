@@ -1,7 +1,7 @@
 # from config import Configuration as Cfg
 # from utils.log import log_exp_config, log_SVM, log_AD_results
-from Utilities.utilies import load_data, dump_model,load_model
-from baisc_svm import OCSVM
+from Utilities.common_funcs import load_data, dump_model,load_model
+from basic_svm import OCSVM
 
 # from Utilities.CSV_Dataloaer import csv_dataloader
 # from utils.visualization.images_plot import plot_outliers_and_most_normal
