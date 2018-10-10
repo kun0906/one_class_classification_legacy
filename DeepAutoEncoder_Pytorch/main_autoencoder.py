@@ -12,7 +12,7 @@
 
 """
 from sklearn.metrics import confusion_matrix
-from Utilities.utilies import load_data
+from Utilities.common_funcs import load_data
 
 import time
 import numpy as np

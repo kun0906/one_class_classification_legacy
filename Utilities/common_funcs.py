@@ -6,7 +6,7 @@
 import pickle
 import numpy as np
 from sklearn.model_selection import train_test_split
-from Utilities.CSV_Dataloaer import csv_dataloader
+from Utilities.CSV_Dataloader import csv_dataloader
 
 
 def normalizate_data(np_arr, eplison=10e-4):

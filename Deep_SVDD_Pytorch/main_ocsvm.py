@@ -13,7 +13,7 @@
 """
 import time
 
-from Utilities.utilies import load_data, dump_model, load_model
+from Utilities.common_funcs import load_data, dump_model, load_model
 from basic_svm import OCSVM
 
 
